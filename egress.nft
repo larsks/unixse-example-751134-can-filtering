@@ -1,0 +1,16 @@
+# NB: you must replace CAN_TESTGID with an actual GID in these rules.
+# The testcan.sh script does this for you.
+
+# ensure the table exists...
+table netdev canfilter {}
+
+# ...so that we can flush it without errors.
+flush table netdev canfilter;
+
+table netdev canfilter {
+	chain can0egress {
+		type filter hook egress device can0 priority filter; policy accept;
+		log group 0;
+		skgid CAN_TESTGID counter drop;
+	}
+}
