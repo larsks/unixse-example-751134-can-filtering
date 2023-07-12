@@ -6,7 +6,7 @@ Part of <https://unix.stackexchange.com/q/751134/4989>.
 
 You will need:
 
-- [`socat`](http://www.dest-unreach.org/socat/)
+- [`canutils`](https://github.com/linux-can/can-utils)
 - [`nftables`](https://wiki.nftables.org/wiki-nftables/index.php/Main_Page)
 - `sudo` access
 
@@ -21,14 +21,14 @@ sudo bash testcan.sh
 Expected output:
 
 ```
-creating virtual cable
 creating interface can0
 creating interface can1
+configuring can gw
 Running cangen as root
-  can1  14B   [8]  E9 2F 91 35 93 BE 89 0A
-  can1  790   [7]  D1 AE A8 60 1D D4 A7
-  can1  36A   [8]  A1 3D A9 22 D0 21 9E 55
-  can1  4EC   [8]  78 EC 0C 77 BD ED F8 07
+  can1  5B3   [8]  9F FB A5 4B 56 C5 4C 46
+  can1  5B1   [8]  53 B0 5D 52 46 37 77 0C
+  can1  41E   [8]  11 39 AD 76 DA 07 50 45
+  can1  7A8   [8]  C4 8B 14 5E 83 F4 D1 25
 Running cangen as lars (gid 1000)
 write: No buffer space available
 ```

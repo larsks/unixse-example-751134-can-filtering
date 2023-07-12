@@ -6,20 +6,15 @@
 set -e
 
 mkdir -p pid
-echo "creating virtual cable"
-socat pty,rawer,link=/tmp/can0 pty,rawer,link=/tmp/can1 > /dev/null &
-echo $! > pid/socat.pid
-
-while ! [[ -c $(readlink /tmp/can0) ]]; do
-	sleep 0.1
-done
 
 for iface in can0 can1; do
 	echo "creating interface $iface"
-	slcand -S 115200 "$(readlink /tmp/$iface)" -F "$iface" > /dev/null &
-	echo $! > pid/$iface.pid
+	ip link add $iface type vcan
 	ip link set $iface up
 done
+
+echo "configuring can gw"
+cangw -A -s can0 -d can1 -e
 
 sed "s/CAN_TESTGID/${CAN_TESTGID}/g" egress.nft | nft -f-
 
